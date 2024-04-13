@@ -1,7 +1,12 @@
 class SudokuSolver {
 
+  parmsCheck(puzzleString, coordinate, value){
+    if(!puzzleString && !coordinate && !value) throw new Error("Required field(s) missing");
+    if(!value || !/^[1-9\.]+$/.test(value)) throw new Error("Invalid value");
+  }
+
   coordinateConverter(coordinate){
-    if(coordinate.length === 0 || coordinate == undefined) throw new Error("Required field(s) missing");
+    if(coordinate.length === 0 || coordinate == undefined) throw new Error("Invalid coordinate");
     const coordinateArray = coordinate.split("");
     let row = coordinateArray[0].charCodeAt(0) - 65;
     let col = coordinateArray[1] - 1;

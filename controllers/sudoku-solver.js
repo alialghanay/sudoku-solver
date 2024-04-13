@@ -1,6 +1,8 @@
 class SudokuSolver {
 
   coordinateConverter(coordinate){
+    console.log(coordinate);
+    if(coordinate.length === 0 || coordinate == undefined) throw new Error("Required field(s) missing");
     const coordinateArray = coordinate.split("");
     let row = coordinateArray[0].charCodeAt(0) - 65;
     let col = coordinateArray[1] - 1;
@@ -10,6 +12,7 @@ class SudokuSolver {
   }
 
   validate(puzzleString) {
+    console.log(puzzleString.length)
     if (puzzleString.length !== 81) throw new Error("Expected puzzle to be 81 characters long");
     if (!/^[1-9\.]+$/.test(puzzleString)) throw new Error("Invalid characters in puzzle");
     return true;
@@ -45,47 +48,46 @@ class SudokuSolver {
   }
     
   solve(puzzleString) {
-    if (!this.validate(puzzleString)) {
-      return false;
-    }
+    try{
 
-    const checkRowPlacement = this.checkRowPlacement;
-    const checkColPlacement = this.checkColPlacement;
-    const checkRegionPlacement = this.checkRegionPlacement;
-
-    function solveRecursive(puzzle) {
-      
+      this.validate(puzzleString);
+      const checkRowPlacement = this.checkRowPlacement;
+      const checkColPlacement = this.checkColPlacement;
+      const checkRegionPlacement = this.checkRegionPlacement;
+      function solveRecursive(puzzle) {
+        
       const emptyCellIndex = puzzle.indexOf('.');
-
-      // Detecting the empty cell.
-      if (emptyCellIndex === -1) {
-        return puzzle;
-      }
-
-      // beging of the alogorhitm 
-      for (let digit = 1; digit <= 9; digit++) {
-
-        const digitStr = digit.toString();
-        const row = Math.floor(emptyCellIndex / 9);
-        const col = emptyCellIndex % 9;
-        if (
-          checkRowPlacement(puzzle, row, col, digitStr) &&
-          checkColPlacement(puzzle, row, col, digitStr) &&
-          checkRegionPlacement(puzzle, row, col, digitStr)
-        ) {
-          const updatedPuzzle = puzzle.slice(0, emptyCellIndex) + digitStr + puzzle.slice(emptyCellIndex + 1); // adding new digitStr to our string
-          const solution = solveRecursive(updatedPuzzle);
-
-          if (solution) {
-            return solution;
-          }
-
+  
+        if (emptyCellIndex === -1) {
+          return puzzle;
         }
+  
+        // beging of the alogorhitm 
+        for (let digit = 1; digit <= 9; digit++) {
+  
+          const digitStr = digit.toString();
+          const row = Math.floor(emptyCellIndex / 9);
+          const col = emptyCellIndex % 9;
+          if (
+            checkRowPlacement(puzzle, row, col, digitStr) &&
+            checkColPlacement(puzzle, row, col, digitStr) &&
+            checkRegionPlacement(puzzle, row, col, digitStr)
+          ) {
+            const updatedPuzzle = puzzle.slice(0, emptyCellIndex) + digitStr + puzzle.slice(emptyCellIndex + 1); // adding new digitStr to our string
+            const solution = solveRecursive(updatedPuzzle);
+  
+            if (solution) {
+              return solution;
+            }
+  
+          }
+        }
+        return false;
       }
-      return false;
+      return solveRecursive(puzzleString);
+    }catch (error){
+      return {error: error.message};
     }
-
-    return solveRecursive(puzzleString);
   }
     
 }

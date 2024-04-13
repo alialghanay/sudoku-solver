@@ -18,13 +18,17 @@ class Sudokufunctions {
         }
         return {valid : isValid};
       }catch (error){
-        return error.message;
+        return {error: error.message};
       }
   }
 
   sudokuSoltion(puzzle){
-    let result = {solution: solver.solve(puzzle)}
-    return result;
+      let result = solver.solve(puzzle);
+      if(result.error){
+        return result;
+      }else{
+        return {solution: result}
+      }
   }
 }
 

@@ -23,10 +23,14 @@ class Sudokufunctions {
   }
 
   sudokuSoltion(puzzle){
+      if(puzzle === undefined || puzzle === null) puzzle = "";
       let result = solver.solve(puzzle);
       if(result.error){
         return result;
-      }else{
+      }else if(result === false) {
+        return {error: 'Puzzle cannot be solved'}
+      }
+      else{
         return {solution: result}
       }
   }

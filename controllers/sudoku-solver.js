@@ -11,9 +11,7 @@ class SudokuSolver {
   }
 
   validate(puzzleString) {
-    console.log(puzzleString)
-    console.log(puzzleString.length === 0 || puzzleString === undefined || puzzleString === null);
-    if(puzzleString.length === 0 || puzzleString === undefined || puzzleString === null) throw new Error("Required field missing");
+    if(puzzleString.length === 0) throw new Error("Required field missing");
     if (puzzleString.length !== 81) throw new Error("Expected puzzle to be 81 characters long");
     if (!/^[1-9\.]+$/.test(puzzleString)) throw new Error("Invalid characters in puzzle");
     return true;

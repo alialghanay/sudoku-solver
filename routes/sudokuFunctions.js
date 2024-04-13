@@ -8,7 +8,8 @@ class Sudokufunctions {
         const rowCheck = solver.checkRowPlacement(puzzle, coordinateArray[1], coordinateArray[0], value);
         const colCheck = solver.checkColPlacement(puzzle, coordinateArray[1], coordinateArray[0], value);
         const regionCheck = solver.checkRegionPlacement(puzzle, coordinateArray[1], coordinateArray[0], value);
-        let valid = rowCheck && colCheck && regionCheck;
+        const cellCheck = solver.checkCellPlacement(puzzle, coordinateArray[1], coordinateArray[0], value);
+        let valid = rowCheck && colCheck && regionCheck || cellCheck;
         if(!valid){
           let conflict = [];
           if(!rowCheck) conflict.push('row');

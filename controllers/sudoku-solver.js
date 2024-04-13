@@ -17,6 +17,12 @@ class SudokuSolver {
     return true;
   }
 
+  checkCellPlacement(puzzleString, row, column, value) {
+    const cell = puzzleString.slice(row * 9 + column,row * 9 + column + 1);
+    if(!/\./.test(cell) && cell === value) return true;
+    return false;
+  }
+
   checkRowPlacement(puzzleString, row, column, value) {
     if(value.length === 0) throw new Error("Required field(s) missing");
     const rowIndex = row * 9;

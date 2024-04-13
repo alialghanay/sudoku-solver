@@ -10,6 +10,7 @@ module.exports = function (app) {
     .post((req, res) => {
       const {puzzle, coordinate, value} = req.body;
       let result = solver.sudokuValidation(puzzle, coordinate, value);
+      console.log(result);
       res.json(result);
     });
     

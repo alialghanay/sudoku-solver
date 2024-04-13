@@ -11,13 +11,14 @@ class SudokuSolver {
   }
 
   validate(puzzleString) {
-    if(puzzleString.length === 0) throw new Error("Required field(s) missing");
+    if(puzzleString.length === 0) throw new Error("Required field missing");
     if (puzzleString.length !== 81) throw new Error("Expected puzzle to be 81 characters long");
     if (!/^[1-9\.]+$/.test(puzzleString)) throw new Error("Invalid characters in puzzle");
     return true;
   }
 
   checkRowPlacement(puzzleString, row, column, value) {
+    if(value.length === 0) throw new Error("Required field(s) missing");
     const rowIndex = row * 9;
     if(puzzleString.slice(rowIndex, rowIndex + 9).includes(value)){
       return false;

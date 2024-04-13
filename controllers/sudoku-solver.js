@@ -1,7 +1,9 @@
 class SudokuSolver {
 
   parmsCheck(puzzleString, coordinate, value){
-    if(!puzzleString && !coordinate && !value) throw new Error("Required field(s) missing");
+    console.log(puzzleString, coordinate, value);
+    console.log(!puzzleString, !coordinate, !value ,!puzzleString || !coordinate || !value)
+    if(!puzzleString || !coordinate || !value) throw new Error("Required field(s) missing");
     if(!value || !/^[1-9\.]+$/.test(value)) throw new Error("Invalid value");
   }
 

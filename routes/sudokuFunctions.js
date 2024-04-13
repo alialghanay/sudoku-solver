@@ -3,7 +3,7 @@ let solver = new SudokuSolver();
 class Sudokufunctions {
   sudokuValidation(puzzle, coordinate, value){
       try{
-        const parms = solver.parmsCheck(puzzle, coordinate, value);
+        solver.parmsCheck(puzzle, coordinate, value);
         const isValid = solver.validate(puzzle);
         const coordinateArray = solver.coordinateConverter(coordinate);
         const rowCheck = solver.checkRowPlacement(puzzle, coordinateArray[1], coordinateArray[0], value);

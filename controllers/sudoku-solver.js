@@ -1,8 +1,6 @@
 class SudokuSolver {
 
   parmsCheck(puzzleString, coordinate, value){
-    console.log(puzzleString, coordinate, value);
-    console.log(!puzzleString, !coordinate, !value ,!puzzleString || !coordinate || !value)
     if(!puzzleString || !coordinate || !value) throw new Error("Required field(s) missing");
     if(!value || !/^[1-9\.]+$/.test(value)) throw new Error("Invalid value");
   }
@@ -12,8 +10,8 @@ class SudokuSolver {
     const coordinateArray = coordinate.split("");
     let row = coordinateArray[0].charCodeAt(0) - 65;
     let col = coordinateArray[1] - 1;
-    if(col < 0 || col > 10) throw new Error("Invalid coordinate");
-    if(row < 0 || row > 10) throw new Error("Invalid coordinate");
+    if(col < 1 || col > 10) throw new Error("Invalid coordinate");
+    if(row < 1 || row > 10) throw new Error("Invalid coordinate");
     return [col, row];
   }
 

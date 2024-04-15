@@ -1,23 +1,20 @@
 class SudokuSolver {
 
   parmsCheck(puzzleString, coordinate, value){
-    console.log(puzzleString, coordinate, value);
     if(!puzzleString || !coordinate || !value) throw new Error("Required field(s) missing");
     if(!value || !/^[1-9\.]+$/.test(value)) throw new Error("Invalid value");
   }
 
   coordinateConverter(coordinate){
-    if(coordinate.length === 0 || coordinate == undefined) throw new Error("Invalid coordinate");
     const coordinateArray = coordinate.split("");
     let row = coordinateArray[0].charCodeAt(0) - 65;
     let col = coordinateArray[1] - 1;
-    if(col < 1 || col > 9) throw new Error("Invalid coordinate");
-    if(row < 1 || row > 9) throw new Error("Invalid coordinate");
+    if(col < 0 || col > 9) throw new Error("Invalid coordinate");
+    if(row < 0 || row > 9) throw new Error("Invalid coordinate");
     return [col, row];
   }
 
   validate(puzzleString) {
-    if(puzzleString.length === 0) throw new Error("Required field missing");
     if (puzzleString.length !== 81) throw new Error("Expected puzzle to be 81 characters long");
     if (!/^[1-9\.]+$/.test(puzzleString)) throw new Error("Invalid characters in puzzle");
     return true;
@@ -25,12 +22,11 @@ class SudokuSolver {
 
   checkCellPlacement(puzzleString, row, column, value) {
     const cell = puzzleString.slice(row * 9 + column,row * 9 + column + 1);
-    if(!/\./.test(cell) && cell === value) return true;
+    if(!/\./.test(cell) && cell == value) return true;
     return false;
   }
 
   checkRowPlacement(puzzleString, row, column, value) {
-    if(value.length === 0) throw new Error("Required field(s) missing");
     const rowIndex = row * 9;
     if(puzzleString.slice(rowIndex, rowIndex + 9).includes(value)){
       return false;
@@ -40,7 +36,7 @@ class SudokuSolver {
 
   checkColPlacement(puzzleString, row, column, value) {
     for(let i = column; i<=81; i += 9){
-      if(puzzleString[i] === value){
+      if(puzzleString[i] == value){
         return false
       }
     }
@@ -51,9 +47,9 @@ class SudokuSolver {
     const regionStartRow = Math.floor(row / 3) * 3;
     const regionStartCol = Math.floor(column / 3) * 3;
 
-    for(let i = regionStartRow; i<regionStartRow + 3; i++){
-      for(let j = regionStartCol; j< regionStartCol + 3; j++){
-        if(puzzleString[i * 9 + j] === value) return false;
+    for(let i = regionStartRow; i < regionStartRow + 3; i++){
+      for(let j = regionStartCol; j < regionStartCol + 3; j++){
+        if(puzzleString[i * 9 + j] == value) return false;
       }
     }
     return true;

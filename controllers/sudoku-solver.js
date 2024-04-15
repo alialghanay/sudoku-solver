@@ -6,6 +6,7 @@ class SudokuSolver {
   }
 
   coordinateConverter(coordinate){
+    if(!coordinate) throw new Error("Invalid coordinate");
     const coordinateArray = coordinate.split("");
     let row = coordinateArray[0].charCodeAt(0) - 65;
     let col = coordinateArray[1] - 1;
@@ -15,6 +16,7 @@ class SudokuSolver {
   }
 
   validate(puzzleString) {
+    if (!puzzleString) throw new Error("Required field missing");
     if (puzzleString.length !== 81) throw new Error("Expected puzzle to be 81 characters long");
     if (!/^[1-9\.]+$/.test(puzzleString)) throw new Error("Invalid characters in puzzle");
     return true;

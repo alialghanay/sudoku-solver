@@ -6,12 +6,12 @@ class SudokuSolver {
   }
 
   coordinateConverter(coordinate){
-    if(!coordinate) throw new Error("Invalid coordinate");
+    if(!coordinate || coordinate.length != 2) throw new Error("Invalid coordinate");
     const coordinateArray = coordinate.split("");
     let row = coordinateArray[0].charCodeAt(0) - 65;
     let col = coordinateArray[1] - 1;
-    if(col < 0 || col > 9) throw new Error("Invalid coordinate");
-    if(row < 0 || row > 9) throw new Error("Invalid coordinate");
+    if(col < 0 || col > 8) throw new Error("Invalid coordinate");
+    if(row < 0 || row > 8) throw new Error("Invalid coordinate");
     return [col, row];
   }
 

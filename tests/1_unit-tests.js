@@ -17,37 +17,48 @@ suite('Unit Tests', () => {
         // #1
         test('Required field(s) missing', function(done) {
             assert.throws(() => solver.parmsCheck(pz, unValid, value), "Required field(s) missing");
+            assert.throws(() => solver.parmsCheck(unValid, coordinate, value), "Required field(s) missing");
+            assert.throws(() => solver.parmsCheck(pz, coordinate, unValid), "Required field(s) missing");
             done();
         });
         
         // #2
         test('Invalid value', function(done) {
             assert.throws(() => solver.parmsCheck(pz, coordinate, "10"), "Invalid value");
+            assert.throws(() => solver.parmsCheck(pz, coordinate, "-1"), "Invalid value");
+            assert.throws(() => solver.parmsCheck(pz, coordinate, "ABC"), "Invalid value");
             done();
         });
 
         // #3
         test('Invalid coordinate', function(done) {
             assert.throws(() => solver.coordinateConverter('55'), "Invalid coordinate");
+            assert.throws(() => solver.coordinateConverter('A10'), "Invalid coordinate");
+            assert.throws(() => solver.coordinateConverter('J10'), "Invalid coordinate");
+            assert.throws(() => solver.coordinateConverter(unValid), "Invalid coordinate");
             done();
         });
 
         // #4
-        test('Expected puzzle to be 81 characters long', function(done) {
+        test('puzzle length', function(done) {
             assert.throws(() => solver.validate(pz + "....."), "Expected puzzle to be 81 characters long");
-            assert.throws(() => solver.validate(pz.replace("9", "x")), "Invalid characters in puzzle");
+            assert.throws(() => solver.validate(unValid), "Required field missing");
+            assert.throws(() => solver.validate(pz.replace("9", "")), "Expected puzzle to be 81 characters long");
             done();
         });
 
         // #5
         test('Invalid characters in puzzle', function(done) {
             assert.throws(() => solver.validate(pz.replace("9", "x")), "Invalid characters in puzzle");
+            assert.throws(() => solver.validate(pz.replace("9", "A")), "Invalid characters in puzzle");
+            assert.throws(() => solver.validate(pz.replace("9", "?")), "Invalid characters in puzzle");
             done();
         });
 
         // #6
         test('Unsolvable Sudoku', function(done) {
             assert.isFalse(solver.solve(unsolvableSudoku));
+            assert.isString(solver.solve(pz));
             done();
         })
     });
@@ -57,6 +68,9 @@ suite('Unit Tests', () => {
         // #7
         test('Convert Coordinate to be array', function(done) {
             assert.deepEqual(solver.coordinateConverter(coordinate), [0, 0]);
+            assert.deepEqual(solver.coordinateConverter("B2"), [1, 1]);
+            assert.deepEqual(solver.coordinateConverter("C3"), [2, 2]);
+            assert.notDeepEqual(solver.coordinateConverter("C3"), [3, 3]);
             done();
         });
 
@@ -98,6 +112,7 @@ suite('Unit Tests', () => {
 
         // #12
         test('Solve', function(done) {
+            assert.isString(solver.solve(pz));
             assert.equal(solver.solve(pz), solution);
             done();
         });

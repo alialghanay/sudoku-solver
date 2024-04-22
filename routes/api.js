@@ -9,6 +9,7 @@ module.exports = function (app) {
   app.route('/api/check')
     .post((req, res) => {
       const {puzzle, coordinate, value} = req.body;
+      console.log(puzzle, coordinate, value);
       let result = solver.sudokuValidation(puzzle, coordinate, value);
       console.log(result);
       res.json(result);

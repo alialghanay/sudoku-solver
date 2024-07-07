@@ -35,7 +35,7 @@ suite("Functional Tests", () => {
         .post("/api/check")
         .end((err, res) => {
           if (err) console.error(err);
-          assert.equal(res.status, 200);
+          assert.equal(res.status, 400);
           done();
         });
     });
@@ -46,7 +46,7 @@ suite("Functional Tests", () => {
         .post("/api/solve")
         .end((err, res) => {
           if (err) console.error(err);
-          assert.equal(res.status, 200);
+          assert.equal(res.status, 400);
           done();
         });
     });
@@ -78,7 +78,7 @@ suite("Functional Tests", () => {
         .send({ puzzle: unValid })
         .end((err, res) => {
           if (err) console.error(err);
-          assert.equal(res.status, 200);
+          assert.equal(res.status, 400);
           assert.isObject(res.body);
           assert.property(res.body, "error");
           assert.equal(res.body.error, "Required field missing");
@@ -94,7 +94,7 @@ suite("Functional Tests", () => {
         .send({ puzzle: pz.replace("9", "x") })
         .end((err, res) => {
           if (err) console.error(err);
-          assert.equal(res.status, 200);
+          assert.equal(res.status, 400);
           assert.isObject(res.body);
           assert.property(res.body, "error");
           assert.equal(res.body.error, "Invalid characters in puzzle");
@@ -110,7 +110,7 @@ suite("Functional Tests", () => {
         .send({ puzzle: pz + "." })
         .end((err, res) => {
           if (err) console.error(err);
-          assert.equal(res.status, 200);
+          assert.equal(res.status, 400);
           assert.isObject(res.body);
           assert.property(res.body, "error");
           assert.equal(
@@ -129,7 +129,7 @@ suite("Functional Tests", () => {
         .send({ puzzle: unsolvableSudoku })
         .end((err, res) => {
           if (err) console.error(err);
-          assert.equal(res.status, 200);
+          assert.equal(res.status, 400);
           assert.isObject(res.body);
           assert.property(res.body, "error");
           assert.equal(res.body.error, "Puzzle cannot be solved");
@@ -212,7 +212,7 @@ suite("Functional Tests", () => {
         .send({ puzzle: pz.replace("9", "x"), coordinate, value })
         .end((err, res) => {
           if (err) console.error(err);
-          assert.equal(res.status, 200);
+          assert.equal(res.status, 400);
           assert.isObject(res.body);
           assert.property(res.body, "error");
           assert.equal(res.body.error, "Invalid characters in puzzle");
@@ -228,7 +228,7 @@ suite("Functional Tests", () => {
         .send({ puzzle: pz + "...", coordinate, value })
         .end((err, res) => {
           if (err) console.error(err);
-          assert.equal(res.status, 200);
+          assert.equal(res.status, 400);
           assert.isObject(res.body);
           assert.property(res.body, "error");
           assert.equal(
@@ -246,7 +246,7 @@ suite("Functional Tests", () => {
         .send({ puzzle: unValid, coordinate: unValid, value: unValid })
         .end((err, res) => {
           if (err) console.error(err);
-          assert.equal(res.status, 200);
+          assert.equal(res.status, 400);
           assert.isObject(res.body);
           assert.property(res.body, "error");
           assert.equal(res.body.error, "Required field(s) missing");
@@ -261,7 +261,7 @@ suite("Functional Tests", () => {
         .send({ puzzle: pz, coordinate: "j10", value })
         .end((err, res) => {
           if (err) console.error(err);
-          assert.equal(res.status, 200);
+          assert.equal(res.status, 400);
           assert.isObject(res.body);
           assert.property(res.body, "error");
           assert.equal(res.body.error, "Invalid coordinate");
@@ -276,7 +276,7 @@ suite("Functional Tests", () => {
         .send({ puzzle: pz, coordinate, value: 10 })
         .end((err, res) => {
           if (err) console.error(err);
-          assert.equal(res.status, 200);
+          assert.equal(res.status, 400);
           assert.isObject(res.body);
           assert.property(res.body, "error");
           assert.equal(res.body.error, "Invalid value");
